@@ -1,5 +1,3 @@
-from functools import reduce
-
 # part one
 with open("./data/day_1.txt") as fin:
     counter = 0
@@ -9,10 +7,10 @@ with open("./data/day_1.txt") as fin:
         for last in digits:
             pass
         counter += first * 10 + last
-counter
+print(counter)
 
 # part two
-numbers = (
+number_words = (
     "one",
     "two",
     "three",
@@ -27,14 +25,14 @@ counter = 0.0
 with open("./data/day_1.txt") as fin:
     counter = 0
     for line in fin:
-        numstrs = []
+        numbers = []
         for ii, c in enumerate(line):
             if line[ii].isdigit():
-                numstrs.append(int(line[ii]))
+                numbers.append(int(line[ii]))
             else:
-                for jj, number in enumerate(numbers, 1):
+                for jj, number in enumerate(number_words, 1):
                     if line[ii : ii + len(number)] == number:
-                        numstrs.append(jj)
+                        numbers.append(jj)
                         break
-        counter += 10 * numstrs[0] + numstrs[-1]
+        counter += 10 * numbers[0] + numbers[-1]
 print(counter)
