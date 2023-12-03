@@ -23,7 +23,6 @@ number_words = (
 )
 counter = 0.0
 with open("./data/day_1.txt") as fin:
-    counter = 0
     for line in fin:
         numbers = []
         for ii, c in enumerate(line):
