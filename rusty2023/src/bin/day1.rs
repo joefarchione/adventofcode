@@ -2,11 +2,11 @@ use std::cmp;
 use std::fs;
 use std::io::{prelude::*, BufReader};
 
-pub fn part_one() -> u32 {
+ fn part_one() -> u32 {
     let file = fs::File::open("./data/day1.txt");
     let reader = BufReader::new(file.unwrap());
 
-    let sum = reader
+    return reader
         .lines()
         .map(|line| {
             let iter = line
@@ -18,10 +18,9 @@ pub fn part_one() -> u32 {
             return iter.first().unwrap() * 10u32 + iter.last().unwrap();
         })
         .sum::<u32>();
-    return sum;
 }
 
-pub fn part_two() -> u32 {
+fn part_two() -> u32 {
     let numbers = vec![
         "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
     ];
@@ -29,7 +28,7 @@ pub fn part_two() -> u32 {
     let file = fs::File::open("./data/day1.txt");
     let reader = BufReader::new(file.unwrap());
 
-    let sum = reader
+    return reader
         .lines()
         .map(|line| line.expect("something bad happened"))
         .map(|line| {
@@ -60,7 +59,6 @@ pub fn part_two() -> u32 {
             return iter.first().unwrap() * 10u32 + iter.last().unwrap();
         })
         .sum();
-    return sum;
 }
 
 fn main() {
