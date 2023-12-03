@@ -57,7 +57,7 @@ fn part_two() -> u32 {
                     );
                 });
 
-			return bag.values().cloned().reduce(|x,y| x * y).unwrap();
+            return bag.values().cloned().reduce(|x, y| x * y).unwrap();
         })
         .sum();
 }
