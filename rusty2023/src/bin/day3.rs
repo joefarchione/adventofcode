@@ -1,8 +1,8 @@
-use std::iter::once;
 use itertools::{Itertools, TupleWindows};
 use regex::Regex;
 use std::fs;
 use std::io::{prelude::*, BufReader};
+use std::iter::once;
 
 #[derive(Clone)]
 struct NumberMatch {
@@ -46,33 +46,38 @@ fn part_one() -> i32 {
             return Positions { numbers, symbols };
         });
 
-	let empty_line = Positions {
-		numbers: vec![NumberMatch {value:0i32, position:10000i32, size:0i32}],
-		symbols: vec![10000i32]};
-	let padded = once(empty_line.clone()).chain(positions).chain(once(empty_line.clone()));
+    let empty_line = Positions {
+        numbers: vec![NumberMatch {
+            value: 0i32,
+            position: 10000i32,
+            size: 0i32,
+        }],
+        symbols: vec![10000i32],
+    };
+    let padded = once(empty_line.clone())
+        .chain(positions)
+        .chain(once(empty_line.clone()));
 
-    let i: TupleWindows<_, (Positions, Positions, Positions)> =
-        padded.into_iter().tuple_windows();
+    let i: TupleWindows<_, (Positions, Positions, Positions)> = padded.into_iter().tuple_windows();
 
     let val = i
         .map(|(p1, p2, p3)| {
-			return p2.numbers
-				.iter()
-				.filter(|n| {
-					p1.symbols
-						.iter()
-						.chain(p2.symbols.iter())
-						.chain(p3.symbols.iter())
-						.any(|s: &i32| (n.position - 1 <= *s) && (*s <= (n.position + n.size)))
-				})
-				.map(|n| n.value)
-				.sum::<i32>();
+            return p2
+                .numbers
+                .iter()
+                .filter(|n| {
+                    p1.symbols
+                        .iter()
+                        .chain(p2.symbols.iter())
+                        .chain(p3.symbols.iter())
+                        .any(|s: &i32| (n.position - 1 <= *s) && (*s <= (n.position + n.size)))
+                })
+                .map(|n| n.value)
+                .sum::<i32>();
         })
         .sum::<i32>();
     return val;
 }
-
-
 
 fn part_two() -> i32 {
     let file = fs::File::open("./data/day3.txt");
@@ -103,40 +108,45 @@ fn part_two() -> i32 {
             return Positions { numbers, symbols };
         });
 
-	let empty_line = Positions {
-		numbers: vec![NumberMatch {value:0i32, position:10000i32, size:0i32}],
-		symbols: vec![10000i32]};
-	let padded = once(empty_line.clone()).chain(positions).chain(once(empty_line.clone()));
+    let empty_line = Positions {
+        numbers: vec![NumberMatch {
+            value: 0i32,
+            position: 10000i32,
+            size: 0i32,
+        }],
+        symbols: vec![10000i32],
+    };
+    let padded = once(empty_line.clone())
+        .chain(positions)
+        .chain(once(empty_line.clone()));
 
-    let i: TupleWindows<_, (Positions, Positions, Positions)> =
-        padded.into_iter().tuple_windows();
+    let i: TupleWindows<_, (Positions, Positions, Positions)> = padded.into_iter().tuple_windows();
 
     let val = i
         .map(|(p1, p2, p3)| {
-			return p2.symbols
-				.iter()
-				.map(|s| {
-					let matches = p1.numbers
-						.iter()
-						.chain(p2.numbers.iter())
-						.chain(p3.numbers.iter())
-						.filter(|n| {
-							(s-1..s+2)
-							.any(|s1| (n.position <= s1) && (n.position+n.size-1 >= s1))
-						});
-					if matches.clone().count() == 2usize
-					{
-						return matches.map(|m| m.value).reduce(|x,y| x * y).unwrap();
-					}
-					else {
-						return 0i32;
-					}
-				})
-				.sum::<i32>();
+            return p2
+                .symbols
+                .iter()
+                .map(|s| {
+                    let matches = p1
+                        .numbers
+                        .iter()
+                        .chain(p2.numbers.iter())
+                        .chain(p3.numbers.iter())
+                        .filter(|n| {
+                            (s - 1..s + 2)
+                                .any(|s1| (n.position <= s1) && (n.position + n.size - 1 >= s1))
+                        });
+                    if matches.clone().count() == 2usize {
+                        return matches.map(|m| m.value).reduce(|x, y| x * y).unwrap();
+                    } else {
+                        return 0i32;
+                    }
+                })
+                .sum::<i32>();
         })
         .sum::<i32>();
     return val;
-
 }
 
 fn main() {
